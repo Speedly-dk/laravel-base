@@ -1,32 +1,16 @@
 <?php
 
-namespace Tests\Feature;
+test('the application redirects to dashboard', function () {
+    $response = $this->get('/');
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+    $response->assertStatus(302);
+    $response->assertRedirect('/dashboard');
+});
 
-class ExampleTest extends TestCase
-{
-    /**
-     * Test that the root URL redirects to dashboard.
-     */
-    public function test_the_application_redirects_to_dashboard(): void
-    {
-        $response = $this->get('/');
+test('the dashboard loads successfully', function () {
+    $response = $this->get('/dashboard');
 
-        $response->assertStatus(302);
-        $response->assertRedirect('/dashboard');
-    }
-    
-    /**
-     * Test that the dashboard page loads successfully.
-     */
-    public function test_the_dashboard_loads_successfully(): void
-    {
-        $response = $this->get('/dashboard');
-
-        $response->assertStatus(200);
-        $response->assertSee('Dashboard');
-        $response->assertSee('Nexus Monitor');
-    }
-}
+    $response->assertStatus(200);
+    $response->assertSee('Dashboard');
+    $response->assertSee('Nexus Monitor');
+});

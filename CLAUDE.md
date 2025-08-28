@@ -1,5 +1,4 @@
 <laravel-boost-guidelines>
-=== foundation rules ===
 
 # Laravel Boost Guidelines
 
@@ -8,7 +7,7 @@ The Laravel Boost guidelines are specifically curated by Laravel maintainers for
 ## Foundational Context
 This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
 
-- php - 8.2.29
+- php - 8.4
 - laravel/framework (LARAVEL) - v12
 - laravel/prompts (PROMPTS) - v0
 - livewire/flux (FLUXUI_FREE) - v2
@@ -39,9 +38,6 @@ This application is a Laravel application and its main Laravel ecosystems packag
 
 ## Documentation Files
 - You must only create documentation files if explicitly requested by the user.
-
-
-=== boost rules ===
 
 ## Laravel Boost
 - Laravel Boost is an MCP server that comes with powerful tools designed specifically for this application. Use them.
@@ -78,10 +74,7 @@ This application is a Laravel application and its main Laravel ecosystems packag
 5. Multiple Queries - queries=["authentication", "middleware"] - ANY of these terms
 
 
-=== php rules ===
-
 ## PHP
-
 - Always use curly braces for control structures, even if it has one line.
 
 ### Constructors
@@ -155,11 +148,7 @@ protected function isAccessible(User $user, ?string $path = null): bool
 ### Vite Error
 - If you receive an "Illuminate\Foundation\ViteException: Unable to locate file in Vite manifest" error, you can run `npm run build` or ask the user to run `npm run dev` or `composer run dev`.
 
-
-=== laravel/v12 rules ===
-
 ## Laravel 12
-
 - Use the `search-docs` tool to get version specific documentation.
 - Since Laravel 11, Laravel has a new streamlined file structure which this project uses.
 
@@ -177,8 +166,6 @@ protected function isAccessible(User $user, ?string $path = null): bool
 ### Models
 - Casts can and likely should be set in a `casts()` method on a model rather than the `$casts` property. Follow existing conventions from other models.
 
-
-=== fluxui-free/core rules ===
 
 ## Flux UI Free
 
