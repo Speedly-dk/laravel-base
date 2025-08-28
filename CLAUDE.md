@@ -11,6 +11,7 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - laravel/framework (LARAVEL) - v12
 - laravel/prompts (PROMPTS) - v0
 - livewire/flux (FLUXUI_FREE) - v2
+- livewire/flux-pro (FLUXUI_PRO) - v2
 - livewire/livewire (LIVEWIRE) - v3
 - laravel/pint (PINT) - v1
 - laravel/sail (SAIL) - v1
@@ -185,13 +186,13 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - Casts can and likely should be set in a `casts()` method on a model rather than the `$casts` property. Follow existing conventions from other models.
 
 
-## Flux UI Free
+## Flux UI Pro
 
-- This project is using the free edition of Flux UI. It has full access to the free components and variants, but does not have access to the Pro components.
-- Flux UI is a component library for Livewire. Flux is a robust, hand-crafted, UI component library for your Livewire applications. It's built using Tailwind CSS and provides a set of components that are easy to use and customize.
-- You should use Flux UI components when available.
-- Fallback to standard Blade components if Flux is unavailable.
-- If available, use Laravel Boost's `search-docs` tool to get the exact documentation and code snippets available for this project.
+- **This project has Flux UI Pro v2.2.6 installed** with full access to all Pro components and features.
+- Flux UI is a premium component library for Livewire. Flux is a robust, hand-crafted, UI component library for your Livewire applications. It's built using Tailwind CSS and provides a comprehensive set of components that are easy to use and customize.
+- Always prefer Flux UI Pro components when building UI elements.
+- Flux Pro includes advanced components like data tables, charts, calendars, and more.
+- Use Laravel Boost's `search-docs` tool to get the exact documentation and code snippets for Flux Pro components.
 - Flux UI components look like this:
 
 <code-snippet name="Flux UI Component Usage Example" lang="blade">
@@ -199,12 +200,14 @@ protected function isAccessible(User $user, ?string $path = null): bool
 </code-snippet>
 
 
-### Available Components
-This is correct as of Boost installation, but there may be additional components within the codebase.
+### Available Flux Pro Components
+With Flux Pro v2.2.6, you have access to ALL Flux components including Pro-exclusive ones:
 
-<available-flux-components>
-avatar, badge, brand, breadcrumbs, button, callout, checkbox, dropdown, field, heading, icon, input, modal, navbar, profile, radio, select, separator, switch, text, textarea, tooltip
-</available-flux-components>
+<available-flux-pro-components>
+**Core Components**: avatar, badge, brand, breadcrumbs, button, callout, checkbox, dropdown, field, heading, icon, input, modal, navbar, profile, radio, select, separator, switch, text, textarea, tooltip
+
+**Pro Components**: table, data-table, chart, calendar, date-picker, time-picker, color-picker, file-upload, wysiwyg, markdown-editor, code-editor, kanban, timeline, stats, and many more advanced components
+</available-flux-pro-components>
 
 
 === livewire/core rules ===
