@@ -1,61 +1,122 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Base Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modern, production-ready Laravel starter template with the TALL stack and premium UI components.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Core Stack
+- **Laravel 12** - Latest version of the Laravel framework
+- **PHP 8.4** - Running on the latest PHP version
+- **Livewire 3.6** - Full-stack framework for Laravel
+- **Alpine.js 3.14** - Lightweight JavaScript framework
+- **Tailwind CSS v4** - Utility-first CSS framework
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Premium Components
+- **Flux Pro v2.2** - Premium UI component library with advanced components
+- **Stripe-inspired Design** - Clean, professional interface with dark mode support
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Development Tools
+- **Laravel Boost** - AI-assisted development configuration
+- **Pest PHP v4** - Modern testing framework with expressive syntax
+- **Laravel Herd** - Optimized local development environment
+- **Vite** - Fast build tool for modern web development
 
-## Learning Laravel
+### Testing
+- **100% Code Coverage Goal** - Comprehensive test suite requirement
+- **Pest v4 Testing** - Modern, readable test syntax
+- **Coverage Command**: `herd coverage ./vendor/bin/pest --coverage`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Quick Start
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Prerequisites
+- PHP 8.4+ (via Laravel Herd recommended)
+- Composer
+- Node.js & NPM
+- Laravel Herd (for optimal local development)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Installation
 
-## Laravel Sponsors
+1. Clone the repository:
+```bash
+git clone https://github.com/Speedly-dk/laravel-base.git my-project
+cd my-project
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2. Install PHP dependencies:
+```bash
+composer install
+```
 
-### Premium Partners
+3. Install NPM dependencies:
+```bash
+npm install
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+4. Copy environment file and generate key:
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## Contributing
+5. Configure your database in `.env` and run migrations:
+```bash
+php artisan migrate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+6. Start the development server:
+```bash
+composer run dev
+```
 
-## Code of Conduct
+This will start:
+- Laravel development server
+- Queue worker
+- Laravel Pail for log monitoring
+- Vite for asset compilation
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Development
 
-## Security Vulnerabilities
+### Available Commands
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- `composer run dev` - Start all development services concurrently
+- `php artisan test` - Run tests
+- `herd coverage ./vendor/bin/pest --coverage` - Run tests with code coverage
+- `./vendor/bin/pint` - Format code with Laravel Pint
+
+### Project Structure
+
+- Modern Laravel 12 structure
+- Livewire components in `app/Livewire`
+- Tailwind CSS v4 configuration
+- Flux Pro components available globally
+- Dark mode support with localStorage persistence
+
+## Testing
+
+This project uses Pest PHP v4 for testing with a goal of 100% code coverage for all new code.
+
+```bash
+# Run tests
+php artisan test
+
+# Run with coverage (requires Laravel Herd)
+herd coverage ./vendor/bin/pest --coverage
+```
+
+## AI Development Guidelines
+
+This project includes `CLAUDE.md` with comprehensive guidelines for AI-assisted development, ensuring consistent code quality and adherence to Laravel best practices.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This is a starter template - apply your own license to derived projects.
+
+## Credits
+
+Built with:
+- [Laravel](https://laravel.com)
+- [Livewire](https://livewire.laravel.com)
+- [Flux UI Pro](https://fluxui.dev)
+- [Tailwind CSS](https://tailwindcss.com)
+- [Alpine.js](https://alpinejs.dev)
+- [Pest PHP](https://pestphp.com)
