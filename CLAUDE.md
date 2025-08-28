@@ -19,6 +19,7 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - tailwindcss (TAILWINDCSS) - v4
 - pestphp/pest (PEST) - v4
 - phpunit/phpunit (PHPUNIT) - v12
+- spatie/laravel-data - v4
 
 
 ## Conventions
@@ -138,9 +139,61 @@ Where:
 2. **Actions** contain business logic and orchestrate operations
 3. **Services** provide reusable utilities (email, payment processing, etc.)
 4. **FormRequests** handle all input validation and authorization
-5. **DTOs** ensure type safety when crossing boundaries
+5. **DTOs** ensure type safety when crossing boundaries using Spatie Laravel Data
 6. Never put business logic in Controllers or Models
 7. Keep Models focused on relationships and data access
+
+### Data Transfer Objects (DTOs) with Spatie Laravel Data
+
+Use Spatie Laravel Data v4 for all DTOs in the application:
+
+```php
+namespace App\Data;
+
+use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Attributes\Validation\Email;
+use Spatie\LaravelData\Attributes\Validation\Max;
+
+class UserData extends Data
+{
+    public function __construct(
+        public string $name,
+        #[Email]
+        public string $email,
+        #[Max(100)]
+        public ?string $bio = null,
+    ) {}
+}
+```
+
+**Key Features to Use:**
+- Data objects for request validation and response transformation
+- Built-in validation attributes
+- Automatic casting from requests, models, and arrays
+- Collections with `DataCollection`
+- Computed properties with `#[Computed]`
+- Lazy properties for performance
+- TypeScript generation support
+
+**Usage in Actions:**
+```php
+class CreateUserAction
+{
+    public function execute(UserData $data): User
+    {
+        return User::create($data->toArray());
+    }
+}
+```
+
+**Usage in Controllers:**
+```php
+public function store(UserData $data): JsonResponse
+{
+    $user = $this->createUserAction->execute($data);
+    return UserData::from($user)->response();
+}
+```
 
 ## Do Things the Laravel Way
 

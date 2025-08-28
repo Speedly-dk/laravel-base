@@ -10,6 +10,7 @@ A modern, production-ready Laravel starter template with the TALL stack and prem
 - **Livewire 3.6** - Full-stack framework for Laravel
 - **Alpine.js 3.14** - Lightweight JavaScript framework
 - **Tailwind CSS v4** - Utility-first CSS framework
+- **Spatie Laravel Data v4** - Powerful DTOs with validation and TypeScript support
 
 ### Premium Components
 - **Flux Pro v2.2** - Premium UI component library with advanced components
@@ -106,8 +107,16 @@ Where:
 - **Actions**: Contain all business logic and orchestration
 - **Services**: Reusable utilities (email, payments, external APIs)
 - **FormRequests**: Handle validation and authorization
-- **DTOs**: Type safety when crossing boundaries
+- **DTOs**: Type safety when crossing boundaries (using Spatie Laravel Data)
 - **Models**: Focus on relationships and data access only
+
+### Data Transfer Objects (DTOs)
+
+This project uses [Spatie Laravel Data](https://spatie.be/docs/laravel-data/v4) for robust DTOs with:
+- Built-in validation attributes
+- Automatic casting from requests and models
+- TypeScript generation support
+- Lazy properties for performance optimization
 
 ## Development
 
@@ -155,3 +164,4 @@ Built with:
 - [Tailwind CSS](https://tailwindcss.com)
 - [Alpine.js](https://alpinejs.dev)
 - [Pest PHP](https://pestphp.com)
+- [Spatie Laravel Data](https://spatie.be/docs/laravel-data)
