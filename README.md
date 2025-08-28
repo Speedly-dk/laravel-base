@@ -74,6 +74,41 @@ This will start:
 - Laravel Pail for log monitoring
 - Vite for asset compilation
 
+## Architecture - Code Boundaries
+
+This project follows a strict code boundaries architecture pattern for clean separation of concerns:
+
+### Simple Version
+- **Input** → FormRequest (validation & authorization)
+- **Delegation** → Controller (routing & orchestration)  
+- **Orchestration** → Action (coordinate business operations)
+- **Business Logic** → Action (core domain logic)
+- **Utilities** → Service (reusable functionality)
+
+### Detailed Flow with Transitions
+```
+> Inbound Processing (Routing, Middlewares, Policies)
+- Delegation (Controller)
+> Contract Validation (FormRequest, Policies, DTOs)
+- Orchestration (Action)
+> Domain Enforcement (Business Logic Conditions, DTOs)
+- Business Logic (Action)
+> System Integration (DTOs, Mapping Data)
+- Utilities (Service)
+```
+
+Where:
+- `>` represents a Transition (crossing a boundary)
+- `-` represents a Boundary (within the same layer)
+
+### Key Principles
+- **Thin Controllers**: Only delegate to Actions, no business logic
+- **Actions**: Contain all business logic and orchestration
+- **Services**: Reusable utilities (email, payments, external APIs)
+- **FormRequests**: Handle validation and authorization
+- **DTOs**: Type safety when crossing boundaries
+- **Models**: Focus on relationships and data access only
+
 ## Development
 
 ### Available Commands

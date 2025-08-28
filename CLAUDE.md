@@ -106,6 +106,42 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - Typically, keys in an Enum should be TitleCase. For example: `FavoritePerson`, `BestLake`, `Monthly`.
 
 
+## Application Architecture - Code Boundaries
+
+This application follows a strict code boundaries architecture pattern for clean separation of concerns:
+
+### Simple Version
+- **Input** → FormRequest (validation & authorization)
+- **Delegation** → Controller (routing & orchestration)
+- **Orchestration** → Action (coordinate business operations)
+- **Business Logic** → Action (core domain logic)
+- **Utilities** → Service (reusable functionality)
+
+### Version with Transitions
+```
+> Inbound Processing (Routing, Middlewares, Policies)
+- Delegation (Controller)
+> Contract Validation (FormRequest, Policies, DTOs)
+- Orchestration (Action)
+> Domain Enforcement (Business Logic Conditions, DTOs)
+- Business Logic (Action)
+> System Integration (DTOs, Mapping Data)
+- Utilities (Service)
+```
+
+Where:
+- `>` represents a Transition (crossing a boundary)
+- `-` represents a Boundary (within the same layer)
+
+### Implementation Guidelines
+1. **Controllers** should be thin - only delegate to Actions
+2. **Actions** contain business logic and orchestrate operations
+3. **Services** provide reusable utilities (email, payment processing, etc.)
+4. **FormRequests** handle all input validation and authorization
+5. **DTOs** ensure type safety when crossing boundaries
+6. Never put business logic in Controllers or Models
+7. Keep Models focused on relationships and data access
+
 ## Do Things the Laravel Way
 
 - Use `php artisan make:` commands to create new files (i.e. migrations, controllers, models, etc.). You can list available Artisan commands using the `list-artisan-commands` tool.
