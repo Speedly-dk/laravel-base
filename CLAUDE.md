@@ -106,8 +106,6 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - Typically, keys in an Enum should be TitleCase. For example: `FavoritePerson`, `BestLake`, `Monthly`.
 
 
-=== laravel/core rules ===
-
 ## Do Things the Laravel Way
 
 - Use `php artisan make:` commands to create new files (i.e. migrations, controllers, models, etc.). You can list available Artisan commands using the `list-artisan-commands` tool.
@@ -147,6 +145,7 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - **IMPORTANT**: This project uses Pest v4 for testing, not PHPUnit directly. Always write tests using Pest syntax.
 - **Code Coverage Requirement**: Aim for 100% code coverage. All new code must have corresponding tests.
 - Use Pest's expressive syntax: `test()`, `it()`, `expect()`, `beforeEach()`, `afterEach()`.
+- Run tests with coverage: `herd coverage ./vendor/bin/pest --coverage`
 - Write descriptive test names that explain what is being tested.
 - Use the `pest()` helper for test configuration in tests/Pest.php.
 - Group related tests using `describe()` blocks when appropriate.
@@ -209,9 +208,6 @@ With Flux Pro v2.2.6, you have access to ALL Flux components including Pro-exclu
 **Pro Components**: table, data-table, chart, calendar, date-picker, time-picker, color-picker, file-upload, wysiwyg, markdown-editor, code-editor, kanban, timeline, stats, and many more advanced components
 </available-flux-pro-components>
 
-
-=== livewire/core rules ===
-
 ## Livewire Core
 - Use the `search-docs` tool to find exact version specific documentation for how to write Livewire & Livewire tests.
 - Use the `php artisan make:livewire [Posts\\CreatePost]` artisan command to create new components
@@ -256,9 +252,6 @@ With Flux Pro v2.2.6, you have access to ALL Flux components including Pro-exclu
         ->assertSeeLivewire(CreatePost::class);
     </code-snippet>
 
-
-=== livewire/v3 rules ===
-
 ## Livewire 3
 
 ### Key Changes From Livewire 2
@@ -293,15 +286,11 @@ document.addEventListener('livewire:init', function () {
 </code-snippet>
 
 
-=== pint/core rules ===
-
 ## Laravel Pint Code Formatter
 
 - You must run `vendor/bin/pint --dirty` before finalizing changes to ensure your code matches the project's expected style.
 - Do not run `vendor/bin/pint --test`, simply run `vendor/bin/pint` to fix any formatting issues.
 
-
-=== tailwindcss/core rules ===
 
 ## Tailwind Core
 
@@ -321,12 +310,6 @@ document.addEventListener('livewire:init', function () {
         </div>
     </code-snippet>
 
-
-### Dark Mode
-- If existing pages and components support dark mode, new pages and components must support dark mode in a similar way, typically using `dark:`.
-
-
-=== tailwindcss/v4 rules ===
 
 ## Tailwind 4
 
