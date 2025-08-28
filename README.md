@@ -14,7 +14,6 @@ A modern, production-ready Laravel starter template with the TALL stack and prem
 
 ### Premium Components
 - **Flux Pro v2.2** - Premium UI component library with advanced components
-- **Stripe-inspired Design** - Clean, professional interface with dark mode support
 
 ### Development Tools
 - **Laravel Boost** - AI-assisted development configuration
@@ -133,7 +132,6 @@ This project uses [Spatie Laravel Data](https://spatie.be/docs/laravel-data/v4) 
 - Livewire components in `app/Livewire`
 - Tailwind CSS v4 configuration
 - Flux Pro components available globally
-- Dark mode support with localStorage persistence
 
 ## Testing
 
