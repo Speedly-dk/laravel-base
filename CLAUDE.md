@@ -16,6 +16,8 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - laravel/sail (SAIL) - v1
 - alpinejs (ALPINEJS) - v3
 - tailwindcss (TAILWINDCSS) - v4
+- pestphp/pest (PEST) - v4
+- phpunit/phpunit (PHPUNIT) - v12
 
 
 ## Conventions
@@ -140,10 +142,26 @@ protected function isAccessible(User $user, ?string $path = null): bool
 ### Configuration
 - Use environment variables only in configuration files - never use the `env()` function directly outside of config files. Always use `config('app.name')`, not `env('APP_NAME')`.
 
-### Testing
+### Testing with Pest v4
+- **IMPORTANT**: This project uses Pest v4 for testing, not PHPUnit directly. Always write tests using Pest syntax.
+- **Code Coverage Requirement**: Aim for 100% code coverage. All new code must have corresponding tests.
+- Use Pest's expressive syntax: `test()`, `it()`, `expect()`, `beforeEach()`, `afterEach()`.
+- Write descriptive test names that explain what is being tested.
+- Use the `pest()` helper for test configuration in tests/Pest.php.
+- Group related tests using `describe()` blocks when appropriate.
+- Run tests with: `php84 ./vendor/bin/pest` (using PHP 8.4)
+- Check coverage with: `php84 ./vendor/bin/pest --coverage` (requires Xdebug or PCOV)
 - When creating models for tests, use the factories for the models. Check if the factory has custom states that can be used before manually setting up the model.
 - Faker: Use methods such as `$this->faker->word()` or `fake()->randomDigit()`. Follow existing conventions whether to use `$this->faker` or `fake()`.
-- When creating tests, make use of `php artisan make:test [options] <name>` to create a feature test, and pass `--unit` to create a unit test. Most tests should be feature tests.
+- Create new test files with: `php artisan make:test [options] <name> --pest` to create Pest tests.
+- Most tests should be feature tests rather than unit tests.
+
+#### Pest Best Practices:
+- Use `expect()` assertions for cleaner, more readable tests
+- Chain expectations: `expect($value)->toBeString()->toContain('test')`
+- Use datasets for parameterized testing
+- Utilize Pest's Laravel helpers: `actingAs()`, `assertDatabaseHas()`, etc.
+- Write tests before implementation when possible (TDD approach)
 
 ### Vite Error
 - If you receive an "Illuminate\Foundation\ViteException: Unable to locate file in Vite manifest" error, you can run `npm run build` or ask the user to run `npm run dev` or `composer run dev`.
