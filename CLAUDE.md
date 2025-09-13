@@ -263,8 +263,65 @@ This application follows a strict code boundaries architecture pattern for clean
 - For APIs, default to using Eloquent API Resources and API versioning unless existing API routes do not, then you should follow existing application convention.
 
 ### Controllers & Validation
-- Always create Form Request classes for validation rather than inline validation in controllers. Include both validation rules and custom error messages.
-- Check sibling Form Requests to see if the application uses array or string based validation rules.
+- **Controllers**: Always use Form Request classes for validation rather than inline validation. Include both validation rules and custom error messages.
+- **Livewire Components**: Use Form Objects for complex forms instead of inline validation.
+- Check sibling Form Requests/Form Objects to see if the application uses array or string based validation rules.
+
+#### Form Request Example (Controllers)
+```php
+// app/Http/Requests/StorePostRequest.php
+class PostRequest extends FormRequest
+{
+    public function rules(): array
+    {
+        return [
+            'title' => ['required', 'string', 'max:255'],
+            'content' => ['required', 'string'],
+            'status' => ['required', Rule::enum(PostStatus::class)],
+        ];
+    }
+}
+
+// Controller usage
+public function store(PostRequest $request)
+{
+    $post = Post::create($request->validated());
+    // ...
+}
+```
+
+#### Form Object Example (Livewire)
+```php
+// app/Livewire/Forms/PostForm.php
+class PostForm extends Form
+{
+    public string $title = '';
+    public string $content = '';
+    public string $status = '';
+
+    public function rules(): array
+    {
+        return [
+            'title' => ['required', 'string', 'max:255'],
+            'content' => ['required', 'string'],
+            'status' => ['required', Rule::enum(PostStatus::class)],
+        ];
+    }
+}
+
+// Livewire component usage
+class CreatePost extends Component
+{
+    public PostForm $form;
+
+    public function save()
+    {
+        $this->form->validate();
+        Post::create($this->form->all());
+        // ...
+    }
+}
+```
 
 ### Queues
 - Use queued jobs for time-consuming operations with the `ShouldQueue` interface.
