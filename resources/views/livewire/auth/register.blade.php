@@ -51,7 +51,7 @@
             </div>
 
             <div class="mb-6 text-3xl italic font-base xl:text-4xl">
-                {{ __('Join thousands of developers building amazing applications with Laravel and modern tools.') }}
+                {{ __('Partner with a web development agency that understands your business and delivers solutions that work.') }}
             </div>
 
             <div class="flex gap-4">
