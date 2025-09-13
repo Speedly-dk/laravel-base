@@ -1,7 +1,4 @@
-<laravel-boost-guidelines>
-
 # Laravel Boost Guidelines
-
 The Laravel Boost guidelines are specifically curated by Laravel maintainers for this application. These guidelines should be followed closely to enhance the user's satisfaction building Laravel applications.
 
 ## Foundational Context
@@ -9,12 +6,10 @@ This application is a Laravel application and its main Laravel ecosystems packag
 
 - php - 8.4
 - laravel/framework (LARAVEL) - v12
-- laravel/prompts (PROMPTS) - v0
 - livewire/flux (FLUXUI_FREE) - v2
 - livewire/flux-pro (FLUXUI_PRO) - v2
 - livewire/livewire (LIVEWIRE) - v3
 - laravel/pint (PINT) - v1
-- laravel/sail (SAIL) - v1
 - alpinejs (ALPINEJS) - v3
 - tailwindcss (TAILWINDCSS) - v4
 - pestphp/pest (PEST) - v4
@@ -139,61 +134,9 @@ Where:
 2. **Actions** contain business logic and orchestrate operations
 3. **Services** provide reusable utilities (email, payment processing, etc.)
 4. **FormRequests** handle all input validation and authorization
-5. **DTOs** ensure type safety when crossing boundaries using Spatie Laravel Data
+5. **DTOs** ensure type safety when crossing boundaries
 6. Never put business logic in Controllers or Models
 7. Keep Models focused on relationships and data access
-
-### Data Transfer Objects (DTOs) with Spatie Laravel Data
-
-Use Spatie Laravel Data v4 for all DTOs in the application:
-
-```php
-namespace App\Data;
-
-use Spatie\LaravelData\Data;
-use Spatie\LaravelData\Attributes\Validation\Email;
-use Spatie\LaravelData\Attributes\Validation\Max;
-
-class UserData extends Data
-{
-    public function __construct(
-        public string $name,
-        #[Email]
-        public string $email,
-        #[Max(100)]
-        public ?string $bio = null,
-    ) {}
-}
-```
-
-**Key Features to Use:**
-- Data objects for request validation and response transformation
-- Built-in validation attributes
-- Automatic casting from requests, models, and arrays
-- Collections with `DataCollection`
-- Computed properties with `#[Computed]`
-- Lazy properties for performance
-- TypeScript generation support
-
-**Usage in Actions:**
-```php
-class CreateUserAction
-{
-    public function execute(UserData $data): User
-    {
-        return User::create($data->toArray());
-    }
-}
-```
-
-**Usage in Controllers:**
-```php
-public function store(UserData $data): JsonResponse
-{
-    $user = $this->createUserAction->execute($data);
-    return UserData::from($user)->response();
-}
-```
 
 ## Do Things the Laravel Way
 
@@ -299,7 +242,7 @@ With Flux Pro v2.2.6, you have access to ALL Flux components including Pro-exclu
 
 ## Livewire Core
 - Use the `search-docs` tool to find exact version specific documentation for how to write Livewire & Livewire tests.
-- Use the `php artisan make:livewire [Posts\\CreatePost]` artisan command to create new components
+- Use the `php artisan make:livewire [Posts\\Create]` artisan command to create new components
 - State should live on the server, with the UI reflecting it.
 - All Livewire requests hit the Laravel backend, they're like regular HTTP requests. Always validate form data, and run authorization checks in Livewire actions.
 
@@ -341,40 +284,6 @@ With Flux Pro v2.2.6, you have access to ALL Flux components including Pro-exclu
         ->assertSeeLivewire(CreatePost::class);
     </code-snippet>
 
-## Livewire 3
-
-### Key Changes From Livewire 2
-- These things changed in Livewire 2, but may not have been updated in this application. Verify this application's setup to ensure you conform with application conventions.
-    - Use `wire:model.live` for real-time updates, `wire:model` is now deferred by default.
-    - Components now use the `App\Livewire` namespace (not `App\Http\Livewire`).
-    - Use `$this->dispatch()` to dispatch events (not `emit` or `dispatchBrowserEvent`).
-    - Use the `components.layouts.app` view as the typical layout path (not `layouts.app`).
-
-### New Directives
-- `wire:show`, `wire:transition`, `wire:cloak`, `wire:offline`, `wire:target` are available for use. Use the documentation to find usage examples.
-
-### Alpine
-- Alpine is now included with Livewire, don't manually include Alpine.js.
-- Plugins included with Alpine: persist, intersect, collapse, and focus.
-
-### Lifecycle Hooks
-- You can listen for `livewire:init` to hook into Livewire initialization, and `fail.status === 419` for the page expiring:
-
-<code-snippet name="livewire:load example" lang="js">
-document.addEventListener('livewire:init', function () {
-    Livewire.hook('request', ({ fail }) => {
-        if (fail && fail.status === 419) {
-            alert('Your session expired');
-        }
-    });
-
-    Livewire.hook('message.failed', (message, component) => {
-        console.error(message);
-    });
-});
-</code-snippet>
-
-
 ## Laravel Pint Code Formatter
 
 - You must run `vendor/bin/pint --dirty` before finalizing changes to ensure your code matches the project's expected style.
@@ -401,34 +310,5 @@ document.addEventListener('livewire:init', function () {
 
 
 ## Tailwind 4
-
 - Always use Tailwind CSS v4 - do not use the deprecated utilities.
-- `corePlugins` is not supported in Tailwind v4.
-- In Tailwind v4, you import Tailwind using a regular CSS `@import` statement, not using the `@tailwind` directives used in v3:
-
-<code-snippet name="Tailwind v4 Import Tailwind Diff" lang="diff"
-   - @tailwind base;
-   - @tailwind components;
-   - @tailwind utilities;
-   + @import "tailwindcss";
-</code-snippet>
-
-
-### Replaced Utilities
-- Tailwind v4 removed deprecated utilities. Do not use the deprecated option - use the replacement.
-- Opacity values are still numeric.
-
-| Deprecated |	Replacement |
-|------------+--------------|
-| bg-opacity-* | bg-black/* |
-| text-opacity-* | text-black/* |
-| border-opacity-* | border-black/* |
-| divide-opacity-* | divide-black/* |
-| ring-opacity-* | ring-black/* |
-| placeholder-opacity-* | placeholder-black/* |
-| flex-shrink-* | shrink-* |
-| flex-grow-* | grow-* |
-| overflow-ellipsis | text-ellipsis |
-| decoration-slice | box-decoration-slice |
-| decoration-clone | box-decoration-clone |
-</laravel-boost-guidelines>
+- Search documentation on how to use it.
