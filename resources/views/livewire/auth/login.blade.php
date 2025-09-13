@@ -51,7 +51,7 @@
 
             <div class="flex gap-4">
                 <div class="flex items-center justify-center w-16 h-16 rounded-full bg-white/10">
-                    <x-logo class="h-10 w-auto" />
+                    <x-logo class="w-auto h-4" />
                 </div>
 
                 <div class="flex flex-col justify-center font-medium">
