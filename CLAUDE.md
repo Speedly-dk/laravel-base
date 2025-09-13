@@ -484,13 +484,17 @@ it('interacts with livewire component', function () {
 
 
 ### Available Flux Pro Components
-With Flux Pro v2, you have access to ALL Flux components including Pro-exclusive ones:
+With Flux Pro v2.3.2, you have access to ALL Flux components:
 
-<available-flux-pro-components>
-**Core Components**: avatar, badge, brand, breadcrumbs, button, callout, checkbox, dropdown, field, heading, icon, input, modal, navbar, profile, radio, select, separator, switch, text, textarea, tooltip
+**Components**: accent, accordion, aside, autocomplete, avatar, badge, brand, breadcrumbs, button, calendar, callout, card, chart, checkbox, command, container, context, date-picker, dropdown, editor, field, fieldset, footer, header, heading, icon (300+ icons), input, label, legend, link, main, menu, modal, navbar, navlist, navmenu, pagination, profile, radio, select, separator, sidebar, spacer, subheading, switch, table, tabs, text, textarea, toast, tooltip
 
-**Pro Components**: table, data-table, chart, calendar, date-picker, time-picker, color-picker, file-upload, wysiwyg, markdown-editor, code-editor, kanban, timeline, stats, and many more advanced components
-</available-flux-pro-components>
+### Flux Component Publishing
+**NOTE**: Flux components can be published to `resources/views/flux/` for customization using:
+```bash
+php artisan flux:publish <component-name> --no-interaction
+```
+
+**Best Practice**: Only publish components you need to customize. Unpublished components use vendor defaults and receive automatic updates when upgrading Flux.
 
 ## Livewire Core
 - Use the `search-docs` tool to find exact version specific documentation for how to write Livewire & Livewire tests.
