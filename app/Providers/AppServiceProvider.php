@@ -19,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Disable mass assignment protection globally for all models
+        // This removes the need for $fillable or $guarded properties
+        // IMPORTANT: Ensure proper validation is always in place
+        Model::unguard();
     }
 }
