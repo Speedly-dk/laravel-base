@@ -7,35 +7,25 @@
                 </a>
             </div>
 
-            <flux:heading class="text-center" size="xl">{{ __('Welcome back') }}</flux:heading>
+            <flux:heading class="text-center" size="xl">{{ __('Reset Password') }}</flux:heading>
 
-            @if (session('status'))
-                <flux:callout variant="success">
-                    {{ session('status') }}
-                </flux:callout>
-            @endif
-
-            <form wire:submit="login" class="space-y-6">
+            <form wire:submit="resetPassword" class="space-y-6">
                 <div class="flex flex-col gap-6">
-                    <flux:input wire:model="form.email" label="{{ __('Email') }}" type="email" placeholder="{{ __('email@example.com') }}" />
+                    <flux:input wire:model="form.email" label="{{ __('Email') }}" type="email" placeholder="{{ __('email@example.com') }}" readonly />
 
                     <flux:field>
-                        <div class="flex justify-between mb-3">
-                            <flux:label>{{ __('Password') }}</flux:label>
-
-                            <flux:link href="{{ route('password.request') }}" variant="subtle" class="text-sm">{{ __('Forgot password?') }}</flux:link>
-                        </div>
-
-                        <flux:input wire:model="form.password" type="password" placeholder="{{ __('Your password') }}" />
+                        <flux:label>{{ __('New Password') }}</flux:label>
+                        <flux:input wire:model="form.password" type="password" placeholder="{{ __('At least 8 characters') }}" autofocus />
+                        <flux:description>{{ __('Must be at least 8 characters') }}</flux:description>
                     </flux:field>
 
-                    <flux:checkbox wire:model="form.remember" label="{{ __('Remember me for 30 days') }}" />
-
-                    <flux:button type="submit" variant="primary" class="w-full">{{ __('Log in') }}</flux:button>
+                    <flux:button type="submit" variant="primary" class="w-full">
+                        {{ __('Reset Password') }}
+                    </flux:button>
                 </div>
 
                 <flux:subheading class="text-center text-gray-600">
-                    {{ __('First time around here?') }} <flux:link href="{{ route('register') }}" class="text-gray-900">{{ __('Sign up for free') }}</flux:link>
+                    {{ __('Remember your password?') }} <flux:link href="{{ route('login') }}" class="text-gray-900">{{ __('Sign in') }}</flux:link>
                 </flux:subheading>
             </form>
         </div>
@@ -52,7 +42,7 @@
             </div>
 
             <div class="mb-6 text-3xl italic font-base xl:text-4xl">
-                {{ __('We build web solutions that simplify, communicate, and create value – with a focus on close relationships and genuine understanding of your business.') }}
+                {{ __('Create a strong, unique password to keep your account secure and protected.') }}
             </div>
 
             <div class="flex gap-4">
