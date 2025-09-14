@@ -51,6 +51,10 @@
             <flux:sidebar.profile avatar="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}" name="{{ auth()->user()->name }}" />
 
             <flux:menu>
+                <flux:menu.item href="{{ route('profile.edit') }}" icon="user">
+                    {{ __('Profile') }}
+                </flux:menu.item>
+                <flux:menu.separator />
                 <form method="POST" action="{{ route('logout') }}" class="block w-full">
                     @csrf
                     <flux:button type="submit" variant="ghost" size="sm" icon="arrow-right-start-on-rectangle" class="justify-start w-full">
@@ -70,6 +74,10 @@
             <flux:profile avatar="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}" />
 
             <flux:menu>
+                <flux:menu.item href="{{ route('profile.edit') }}" icon="user">
+                    {{ __('Profile') }}
+                </flux:menu.item>
+                <flux:menu.separator />
                 <flux:menu.item>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf

@@ -18,6 +18,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::get('/profile', \App\Livewire\Profile\Edit::class)->name('profile.edit');
 
     Route::post('/logout', function () {
         Auth::logout();
