@@ -31,6 +31,7 @@ class RegisterForm extends Form
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
+            'two_factor_required' => true,
         ]);
 
         event(new Registered($user));

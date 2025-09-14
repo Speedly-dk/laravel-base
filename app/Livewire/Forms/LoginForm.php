@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Forms;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -21,11 +23,13 @@ class LoginForm extends Form
     #[Validate('boolean')]
     public bool $remember = false;
 
-    public function authenticate(): void
+    public function authenticate(): bool
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only(['email', 'password']), $this->remember)) {
+        $user = User::where('email', $this->email)->first();
+
+        if (! $user || ! Hash::check($this->password, $user->password)) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -33,7 +37,21 @@ class LoginForm extends Form
             ]);
         }
 
+        if ($user->hasTwoFactorEnabled()) {
+            session([
+                'two_factor_user_id' => $user->id,
+                'two_factor_remember' => $this->remember ? 'on' : '',
+            ]);
+
+            RateLimiter::clear($this->throttleKey());
+
+            return true;
+        }
+
+        Auth::login($user, $this->remember);
         RateLimiter::clear($this->throttleKey());
+
+        return false;
     }
 
     protected function ensureIsNotRateLimited(): void

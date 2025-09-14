@@ -15,7 +15,13 @@ class Login extends Component
     {
         $this->validate();
 
-        $this->form->authenticate();
+        $requiresTwoFactor = $this->form->authenticate();
+
+        if ($requiresTwoFactor) {
+            $this->redirect(route('two-factor.challenge'), navigate: true);
+
+            return;
+        }
 
         Session::regenerate();
 

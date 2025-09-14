@@ -50,7 +50,7 @@ class Edit extends Component
             'email' => $this->email,
         ]);
 
-        session()->flash('message', 'Profile updated successfully!');
+        session()->flash('message', __('Profile updated successfully!'));
         $this->dispatch('profile-updated');
     }
 
@@ -64,7 +64,7 @@ class Edit extends Component
 
         $this->reset(['current_password', 'password']);
 
-        session()->flash('password_message', 'Password updated successfully!');
+        session()->flash('password_message', __('Password updated successfully!'));
     }
 
     public function render()
