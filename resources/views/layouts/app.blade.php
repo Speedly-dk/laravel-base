@@ -51,14 +51,12 @@
             <flux:sidebar.profile avatar="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}" name="{{ auth()->user()->name }}" />
 
             <flux:menu>
-                <flux:menu.item>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <flux:button type="submit" variant="ghost" size="sm" icon="arrow-right-start-on-rectangle" class="w-full justify-start">
-                            {{ __('Logout') }}
-                        </flux:button>
-                    </form>
-                </flux:menu.item>
+                <form method="POST" action="{{ route('logout') }}" class="block w-full">
+                    @csrf
+                    <flux:button type="submit" variant="ghost" size="sm" icon="arrow-right-start-on-rectangle" class="justify-start w-full">
+                        {{ __('Logout') }}
+                    </flux:button>
+                </form>
             </flux:menu>
         </flux:dropdown>
     </flux:sidebar>
@@ -75,7 +73,7 @@
                 <flux:menu.item>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <flux:button type="submit" variant="ghost" size="sm" icon="arrow-right-start-on-rectangle" class="w-full justify-start">
+                        <flux:button type="submit" variant="ghost" size="sm" icon="arrow-right-start-on-rectangle" class="justify-start w-full">
                             {{ __('Logout') }}
                         </flux:button>
                     </form>
