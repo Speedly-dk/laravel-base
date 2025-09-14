@@ -31,6 +31,8 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - Follow PSR-12 coding standards
 - Use consistent naming: camelCase for variables/methods, PascalCase for classes
 - Keep methods focused and single-purpose
+- Use short nullable notation: `?string` not `string|null`
+- Always specify `void` return types when methods return nothing
 
 ## Development Workflow
 
@@ -71,6 +73,12 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - Form Requests: `{Resource}Request.php`
 - Resources: `{Resource}Resource.php`
 - Tests: `{Feature}Test.php` or `{Unit}Test.php`
+- Jobs: action-based (`CreateUser.php`, `SendEmailNotification.php`)
+- Events: tense-based (`UserRegistering.php`, `UserRegistered.php`)
+- Listeners: action + `Listener` suffix (`SendInvitationMailListener.php`)
+- Commands: action + `Command` suffix (`PublishScheduledPostsCommand.php`)
+- Mailables: purpose + `Mail` suffix (`AccountActivatedMail.php`)
+- Enums: descriptive name, no prefix (`OrderStatus.php`, `BookingType.php`)
 
 ## Frontend Development
 
@@ -134,6 +142,19 @@ This application is a Laravel application and its main Laravel ecosystems packag
   - `make:test --pest`
   - `make:migration`
 
+### Command Output Best Practices
+- Always provide feedback: `$this->comment('All ok!')`
+- Show progress for loops, summary at end
+- Put output BEFORE processing item (easier debugging):
+  ```php
+  $items->each(function(Item $item) {
+      $this->info("Processing item id `{$item->id}`...");
+      $this->processItem($item);
+  });
+
+  $this->comment("Processed {$items->count()} items.");
+  ```
+
 ## URLs
 - Whenever you share a project URL with the user you should use the `get-absolute-url` tool to ensure you're using the correct scheme, domain / IP, and port.
 
@@ -166,6 +187,33 @@ This application is a Laravel application and its main Laravel ecosystems packag
 ## PHP
 - Always use curly braces for control structures, even if it has one line.
 
+### Control Flow Best Practices
+- **Happy path last**: Handle error conditions first, success case last
+- **Avoid else**: Use early returns instead of nested conditions
+- **Separate conditions**: Prefer multiple if statements over compound conditions
+- **Ternary operators**: Each part on own line unless very short
+
+```php
+// Happy path last
+if (! $user) {
+    return null;
+}
+
+if (! $user->isActive()) {
+    return null;
+}
+
+// Process active user...
+
+// Short ternary
+$name = $isFoo ? 'foo' : 'bar';
+
+// Multi-line ternary
+$result = $object instanceof Model ?
+    $object->name :
+    'A default value';
+```
+
 ### Constructors
 - Use PHP 8 constructor property promotion in `__construct()`.
     - <code-snippet>public function __construct(public GitHub $github) { }</code-snippet>
@@ -175,6 +223,32 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - Always use explicit return type declarations for methods and functions.
 - Use appropriate PHP type hints for method parameters.
 
+### String Formatting
+- **String interpolation** is preferred over concatenation:
+  ```php
+  // Good
+  $message = "Hello {$name}";
+
+  // Avoid
+  $message = 'Hello ' . $name;
+  ```
+- **Translations**: Always use strings directly, not keys:
+  ```php
+  // Good
+  __('Welcome to our application')
+
+  // Avoid
+  __('messages.welcome')
+  ```
+- **Always use `__()`** helper over `@lang` directive:
+  ```php
+  // Good (in Blade)
+  {{ __('Welcome to our application') }}
+
+  // Avoid
+  @lang('Welcome to our application')
+  ```
+
 <code-snippet name="Explicit Return Types and Method Params" lang="php">
 protected function isAccessible(User $user, ?string $path = null): bool
 {
@@ -182,11 +256,36 @@ protected function isAccessible(User $user, ?string $path = null): bool
 }
 </code-snippet>
 
+
 ## Comments
 - Prefer PHPDoc blocks over comments. Never use comments within the code itself unless there is something _very_ complex going on.
 
+## Code Formatting & Whitespace
+- Add blank lines between statements for readability
+- Exception: sequences of equivalent single-line operations
+- No extra empty lines between `{}` brackets
+- Let code "breathe" - avoid cramped formatting
+- Maintain visual separation between logical blocks of code
+
 ## PHPDoc Blocks
 - Add useful array shape type definitions for arrays when appropriate.
+- **Always import classnames in docblocks** - never use fully qualified names:
+  ```php
+  use \Spatie\Url\Url;
+  /** @return Url */
+  ```
+- Use one-line docblocks when possible: `/** @var string */`
+- Most common type should be first in multi-type docblocks:
+  ```php
+  /** @var Collection|SomeWeirdVendor\Collection */
+  ```
+- For array shapes with fixed keys, put each key on its own line:
+  ```php
+  /** @return array{
+     first: SomeClass,
+     second: SomeClass
+  } */
+  ```
 
 ## Enums
 
@@ -251,7 +350,7 @@ This application follows a strict code boundaries architecture pattern for clean
 #### Migrations
 - One change per migration file
 - Use descriptive names: `add_status_to_users_table`
-- Never include down() method for rollbacks
+- **Never include down() method** - only write up() methods in migrations
 - Use foreign key constraints for relationships
 - Never modify existing migrations
 
@@ -263,10 +362,9 @@ This application follows a strict code boundaries architecture pattern for clean
 - For APIs, default to using Eloquent API Resources and API versioning unless existing API routes do not, then you should follow existing application convention.
 
 ### Controllers & Validation
-- **Controllers**: Always use Form Request classes for validation rather than inline validation. Include both validation rules and custom error messages.
+- **Controllers**: Always use Form Request classes for validation rather than inline validation. Include both validation rules and custom error messages. Never uses more than one FormRequets per Controller
 - **Livewire Components**: Use Form Objects for complex forms instead of inline validation.
 - Check sibling Form Requests/Form Objects to see if the application uses array or string based validation rules.
-
 #### Form Request Example (Controllers)
 ```php
 // app/Http/Requests/StorePostRequest.php
@@ -677,6 +775,22 @@ php artisan flux:publish <component-name> --no-interaction
 - Validate API input thoroughly
 - Use CORS configuration properly
 - Log API access for monitoring
+
+## Naming Conventions Quick Reference
+
+### PHP & Laravel Naming Standards
+- **Classes**: PascalCase (`UserController`, `OrderStatus`)
+- **Methods/Variables**: camelCase (`getUserName`, `$firstName`)
+- **Routes**: kebab-case (`/open-source`, `/user-profile`)
+- **Route names**: camelCase (`->name('openSource')`)
+- **Route parameters**: camelCase (`{userId}`)
+- **Config files**: kebab-case (`pdf-generator.php`)
+- **Config keys**: snake_case (`chrome_path`)
+- **Artisan commands**: kebab-case (`php artisan delete-old-records`)
+- **Blade views**: kebab-case (`open-source.blade.php`)
+- **Database tables**: snake_case plural (`user_profiles`)
+- **Database columns**: snake_case (`created_at`)
+- **Validation rules**: snake_case for custom rules (`organisation_type`)
 
 ## Common Development Commands
 
