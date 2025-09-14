@@ -389,9 +389,37 @@ Route::middleware(['auth', 'verified'])->group(...);
 - Write tests before implementation when possible (TDD approach)
 
 ### Browser Testing with Pest v4
-- **IMPORTANT**: This project uses Pest's browser testing plugin for end-to-end testing
-- Install with: `composer require pestphp/pest-plugin-browser --dev`
-- Browser tests provide real browser automation using Laravel Dusk under the hood
+- **IMPORTANT**: This project uses Pest's browser testing plugin, NOT Laravel Dusk directly
+- The plugin is already installed: `pestphp/pest-plugin-browser`
+- Browser tests go in `tests/Feature/` directory, NOT `tests/Browser/`
+- Uses simplified syntax with `visit()` and `assertNoSmoke()` helpers
+
+#### Smoke Testing Pattern
+```php
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
+
+it('tests all non-authenticated URLs', function () {
+    $routes = ['/', '/login', '/register', '/forgot-password'];
+    visit($routes)->assertNoSmoke();
+});
+
+it('tests all authenticated URLs', function () {
+    $user = User::factory()->create();
+    $this->actingAs($user);
+
+    $authRoutes = ['/dashboard'];
+    visit($authRoutes)->assertNoSmoke();
+});
+```
+
+#### Common Browser Testing Patterns
+- **Smoke Testing**: `visit($routes)->assertNoSmoke()` - Checks for JavaScript errors and page loads
+- **Authentication**: Use `$this->actingAs($user)` before `visit()` for authenticated routes
+- **RefreshDatabase**: Always use `uses(RefreshDatabase::class)` for test isolation
+- **Multiple Routes**: Pass array of routes to `visit()` to test multiple pages at once
 
 #### Browser Test Setup
 ```php
@@ -428,8 +456,7 @@ it('interacts with livewire component', function () {
 
 #### Best Practices for Browser Tests
 - Use data attributes for targeting elements: `data-test="submit-button"`
-- Group browser tests in `tests/Browser` directory
-- Run browser tests separately: `php artisan pest:browser`
+- Run tests with: `php84 ./vendor/bin/pest tests/Feature/SmokeTest.php`
 - Take screenshots on failure for debugging
 - Use page objects for complex interactions
 - Clean up test data after each test
@@ -501,6 +528,13 @@ php artisan flux:publish <component-name> --no-interaction
 - Use the `php artisan make:livewire [Posts\\Create]` artisan command to create new components
 - State should live on the server, with the UI reflecting it.
 - All Livewire requests hit the Laravel backend, they're like regular HTTP requests. Always validate form data, and run authorization checks in Livewire actions.
+
+### Alpine.js Integration - CRITICAL
+- **WARNING: Do NOT manually initialize Alpine.js**
+- Alpine.js is already included and managed by Livewire 3
+- **Never add** `import Alpine from 'alpinejs'` or `Alpine.start()` to your app.js
+- Flux UI components automatically use Livewire's built-in Alpine instance
+- Adding Alpine manually will cause conflicts and JavaScript errors
 
 ## Livewire Best Practices
 - Livewire components require a single root element.
@@ -643,3 +677,13 @@ php artisan flux:publish <component-name> --no-interaction
 - Validate API input thoroughly
 - Use CORS configuration properly
 - Log API access for monitoring
+
+## Common Development Commands
+
+### Cache Management
+Laravel uses various caches that can cause issues during development, especially with Blade views and Flux UI components.
+
+**Quick Fix for Most Issues:**
+```bash
+php artisan optimize:clear  # Clears ALL caches at once
+```
